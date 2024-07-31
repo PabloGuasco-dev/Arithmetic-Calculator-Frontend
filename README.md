@@ -32,12 +32,8 @@ This project is a web platform that provides basic calculator functionalities (a
 
 Install the dependencies:
 
-sh
-Copiar código
 npm install
 
-sh
-Copiar código
 npm start
 The application will run on http://localhost:3001.
 

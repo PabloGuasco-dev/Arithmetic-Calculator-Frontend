@@ -27,24 +27,19 @@ This project is a web platform that provides basic calculator functionalities (a
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/your-username/arithmetic-calculator-frontend.git
+   git clone https://github.com/PabloGuasco-dev/Arithmetic-Calculator-Frontend.git
    cd arithmetic-calculator-frontend
+
 Install the dependencies:
 
 sh
 Copiar código
 npm install
-Create a .env file in the root directory and add the following environment variables:
-
-sh
-Copiar código
-REACT_APP_API_URL=http://localhost:5000/api
-Start the development server:
 
 sh
 Copiar código
 npm start
-The application will run on http://localhost:3000.
+The application will run on http://localhost:3001.
 
 Available Scripts
 In the project directory, you can run:

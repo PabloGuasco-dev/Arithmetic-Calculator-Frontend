@@ -55,7 +55,6 @@ const UserRecords = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Operation</th>
                 <th>Amount</th>
                 <th>User Balance</th>
@@ -66,12 +65,11 @@ const UserRecords = () => {
             <tbody>
               {records.map(record => (
                 <tr key={record.id}>
-                  <td>{record.id}</td>
-                  <td>{record.operation_id}</td>
+                  <td>{record.operation_id.type}</td> {}
                   <td>{record.amount}</td>
                   <td>{record.user_balance}</td>
                   <td>{record.operation_response}</td>
-                  <td>{record.date}</td>
+                  <td>{new Date(record.date).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>

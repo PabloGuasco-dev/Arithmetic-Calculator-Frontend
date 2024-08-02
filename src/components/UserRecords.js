@@ -11,29 +11,43 @@ const UserRecords = () => {
   const [error, setError] = useState(null);
   const { auth } = useAuth();
 
-  useEffect(() => {
-    const fetchRecords = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/records?page=${page}&perPage=${perPage}&search=${search}`, {
-          headers: {
-            Authorization: `Bearer ${auth}`
-          }
-        });
-        setRecords(response.data.records);
-      } catch (error) {
-        console.error('Failed to fetch records', error);
-        setError('Failed to fetch records');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchRecords = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/records?page=${page}&perPage=${perPage}&search=${search}`, {
+        headers: {
+          Authorization: `Bearer ${auth}`
+        }
+      });
+      setRecords(response.data.records);
+    } catch (error) {
+      console.error('Failed to fetch records', error);
+      setError('Failed to fetch records');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (auth) {
       fetchRecords();
     }
   }, [page, perPage, search, auth]);
+
+  const deleteRecord = async (recordId) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/records/${recordId}`, {
+        headers: {
+          Authorization: `Bearer ${auth}`
+        }
+      });
+      fetchRecords(); // Refetch records after deletion
+    } catch (error) {
+      console.error('Failed to delete record', error);
+      setError('Failed to delete record');
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -60,16 +74,20 @@ const UserRecords = () => {
                 <th>User Balance</th>
                 <th>Response</th>
                 <th>Date</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {records.map(record => (
                 <tr key={record.id}>
-                  <td>{record.operation_id.type}</td> {}
+                  <td>{record.operation_id.type}</td>
                   <td>{record.amount}</td>
                   <td>{record.user_balance}</td>
                   <td>{record.operation_response}</td>
                   <td>{new Date(record.date).toLocaleDateString()}</td>
+                  <td>
+                    <button className="btn btn-danger" onClick={() => deleteRecord(record._id)}>Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
